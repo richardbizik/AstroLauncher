@@ -31,7 +31,7 @@ def valid_ip(address):
         return False
 
 
-def get_current_settings(launcher, ovrIP=False):
+def get_current_settings(launcher, ovrIP=False, validateIP=True):
     curPath = launcher.astroPath
 
     curLog = "AstroServerSettings.ini"
@@ -49,7 +49,7 @@ def get_current_settings(launcher, ovrIP=False):
             AstroLogging.logPrint(
                 "PublicIP field (AstroServerSettings.ini) contained a Private IP!", "warning")
             AstroLogging.logPrint(
-                "This will be automatically fixed..", "warning")
+                "This will be automatically fixed.. or not", "warning")
     except:
         validIP = False
 
@@ -60,15 +60,16 @@ def get_current_settings(launcher, ovrIP=False):
         }
     }
 
-    try:
-        if ovrIP:
-            if launcher.launcherConfig.OverwritePublicIP or not validIP:
-                ovrConfig["/Script/Astro.AstroServerSettings"]["PublicIP"] = get_public_ip()
-    except:
-        t = "warning"
-        if not validIP:
-            t = "error"
-        AstroLogging.logPrint("Could not update PublicIP!", t)
+    if validateIP:
+        try:
+            if ovrIP:
+                if launcher.launcherConfig.OverwritePublicIP or not validIP:
+                    ovrConfig["/Script/Astro.AstroServerSettings"]["PublicIP"] = get_public_ip()
+        except:
+            t = "warning"
+            if not validIP:
+                t = "error"
+            AstroLogging.logPrint("Could not update PublicIP!", t)
 
     try:
         curLog = "AstroServerSettings.ini"

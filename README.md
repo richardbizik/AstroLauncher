@@ -119,6 +119,9 @@ DisableNetworkCheck = False
 # Always Overwrite the PublicIP setting in AstroServerSettings.ini
 OverwritePublicIP = True
 
+# Validate and possibly overwrite the PublicIP setting in AstroServerSettings.ini
+ValidatePublicIP = True
+
 # Enable/Disable showing server FPS in console. This will probably spam your console when playing are in your server
 ShowServerFPSInConsole = True
 
